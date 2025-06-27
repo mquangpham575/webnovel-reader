@@ -48,9 +48,4 @@ def parse_epub(filepath):
         chapter_html = str(body)
         chapter_list.append((chapter_title, chapter_html))
 
-    # Debug in ra tiêu đề đã được thêm
-    print(f"✅ Tổng số chương: {len(chapter_list)}")
-    for idx, (chapter_title, _) in enumerate(chapter_list, 1):
-        print(f"{idx}: {chapter_title}")
-
     return title, chapter_list
