@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ title }}</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      max-width: 700px;
+      margin: 40px auto;
+      padding: 20px;
+      line-height: 1.6;
+      background-color: #f9f9f9;
+    }
+    h1 {
+      font-size: 28px;
+      text-align: center;
+      color: #2c3e50;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    h1::before {
+      content: "📘";
+      margin-right: 10px;
+      font-size: 30px;
+    }
+    ul {
+      list-style-type: none;
+      padding-left: 0;
+      margin-top: 30px;
+    }
+    li {
+      background: white;
+      border-radius: 8px;
+      margin: 10px 0;
+      padding: 12px 18px;
+      transition: background 0.2s, box-shadow 0.2s;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+    li:hover {
+      background: #eef6ff;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+    }
+    a {
+      text-decoration: none;
+      color: #34495e;
+      font-weight: 500;
+      display: block;
+    }
+    a:hover {
+      color: #2980b9;
+    }
+    .back-link {
+      display: inline-block;
+      margin-top: 30px;
+      text-decoration: none;
+      color: #7f8c8d;
+      font-size: 16px;
+    }
+    .back-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <h1>{{ title }}</h1>
+  <ul>
+    {% for chapter in chapters %}
+      <li>
+        <a href="{{ url_for('read_chapter', title=title, chapter_id=loop.index0) }}">
+          {{ chapter['title'] }}
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+  <a class="back-link" href="{{ url_for('index') }}">⬅️ Quay lại danh sách truyện</a>
+</body>
+</html>

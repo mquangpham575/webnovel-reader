@@ -1,0 +1,257 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Georgia', serif;
+      display: flex;
+      height: 100vh;
+      background: #f5f5f5;
+      color: #222;
+      transition: background 0.3s, color 0.3s;
+    }
+    .sidebar {
+      width: 280px;
+      background: #fff;
+      border-right: 1px solid #ccc;
+      overflow-y: auto;
+      padding: 20px;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      transition: background 0.3s, color 0.3s;
+    }
+    .sidebar h2 {
+      margin-top: 0;
+      font-size: 22px;
+    }
+    .sidebar h2 a {
+      color: #444;
+    }
+    .sidebar h2 a:hover {
+      color: black;
+    }
+    .sidebar a {
+      display: block;
+      padding: 10px 15px;
+      margin: 5px 0;
+      color: #333;
+      text-decoration: none;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .sidebar a:hover {
+      background-color: #eee;
+    }
+    .sidebar a.active {
+      background-color: #333;
+      color: white;
+      font-weight: bold;
+    }
+    .reader {
+      flex: 1;
+      overflow-y: auto;
+      padding: 50px;
+      transition: all 0.3s;
+    }
+    .reader h1 {
+      font-size: 26px;
+      margin-bottom: 20px;
+    }
+    .reader p {
+      line-height: 1.7;
+      font-size: 18px;
+      margin-bottom: 16px;
+    }
+    .nav-buttons {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 100%;
+      pointer-events: none;
+    }
+    .nav-buttons a {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 36px;
+      color: #444;
+      text-decoration: none;
+      background: none;
+      border: none;
+      pointer-events: auto;
+      opacity: 0.5;
+      transition: opacity 0.2s ease;
+    }
+    .nav-buttons a:hover {
+      opacity: 1;
+      color: black;
+    }
+    .nav-buttons a.left {
+      left: 330px;
+    }
+    .nav-buttons a.right {
+      right: 40px;
+    }
+    .settings {
+      position: fixed;
+      top: 10px;
+      right: 20px;
+      font-size: 22px;
+      color: white;
+      border-radius: 10px;
+      padding: 8px 10px;
+      cursor: pointer;
+      z-index: 1001;
+    }
+    #settings-panel {
+      display: none;
+      position: fixed;
+      top: 55px;
+      right: 20px;
+      background: #fff;
+      color: #000;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+    }
+    .night {
+      background: #121212 !important;
+      color: #e0e0e0 !important;
+    }
+    .night .sidebar {
+      background: #1e1e1e !important;
+      color: #eee !important;
+    }
+    .night .sidebar a {
+      color: #ccc !important;
+    }
+    .night .sidebar a:hover {
+      background: #333 !important;
+    }
+    .night .sidebar a.active {
+      color: #000 !important;
+    }
+    .night .settings {
+      color: #000 !important;
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <h2 style="display: flex; align-items: center;">
+        <a href="{{ url_for('index') }}" style="font-size: 25px; text-decoration: none; margin-right: 8px;">⌂</a>
+        <span>{{ title }}</span>
+    </h2>
+
+    
+    {% for i in range(chapter_list|length) %}
+      {% set chap_title = chapter_list[i] %}
+      <a href="{{ url_for('read_chapter', title=title, chapter_id=i) }}"
+         class="{% if i == chapter_id %}active{% endif %}">
+         {{ chap_title }}
+      </a>
+    {% endfor %}
+  </div>
+
+  <div class="reader">
+    <div class="settings" onclick="toggleSettings()">⚙️</div>
+    <div>{{ chapter | safe }}</div>
+  </div>
+
+  <div id="settings-panel">
+    <label>Font:
+      <select id="fontSelect">
+        <option value="Georgia">Georgia</option>
+        <option value="Arial">Arial</option>
+        <option value="Times New Roman">Times New Roman</option>
+      </select>
+    </label><br><br>
+    <label>Font size:
+      <select id="fontSizeSelect">
+        <option value="16px">16px</option>
+        <option value="18px" selected>18px</option>
+        <option value="20px">20px</option>
+        <option value="22px">22px</option>
+      </select>
+    </label><br><br>
+    <label><input type="checkbox" id="nightModeToggle"> Night light 🌙</label>
+  </div>
+
+  <div class="nav-buttons">
+    {% if chapter_id > 0 %}
+      <a href="{{ url_for('read_chapter', title=title, chapter_id=chapter_id - 1) }}" class="left">&#10094;</a>
+    {% endif %}
+    {% if chapter_id + 1 < chapter_list|length %}
+      <a href="{{ url_for('read_chapter', title=title, chapter_id=chapter_id + 1) }}" class="right">&#10095;</a>
+    {% endif %}
+  </div>
+
+  <script>
+    function toggleSettings() {
+      const panel = document.getElementById("settings-panel");
+      panel.style.display = (panel.style.display === "none") ? "block" : "none";
+    }
+
+    document.getElementById("fontSelect").addEventListener("change", function() {
+      document.querySelector(".reader").style.fontFamily = this.value;
+      localStorage.setItem("font", this.value);
+    });
+
+    document.getElementById("fontSizeSelect").addEventListener("change", function() {
+      document.querySelector(".reader").style.fontSize = this.value;
+      localStorage.setItem("fontSize", this.value);
+    });
+
+    document.getElementById("nightModeToggle").addEventListener("change", function() {
+      if (this.checked) {
+        document.body.classList.add("night");
+        localStorage.setItem("nightMode", "on");
+      } else {
+        document.body.classList.remove("night");
+        localStorage.setItem("nightMode", "off");
+      }
+    });
+
+    window.onload = function () {
+      const font = localStorage.getItem("font");
+      const size = localStorage.getItem("fontSize");
+      const night = localStorage.getItem("nightMode");
+
+      if (font) {
+        document.querySelector(".reader").style.fontFamily = font;
+        document.getElementById("fontSelect").value = font;
+      }
+
+      if (size) {
+        document.querySelector(".reader").style.fontSize = size;
+        document.getElementById("fontSizeSelect").value = size;
+      }
+
+      if (night === "on") {
+        document.body.classList.add("night");
+        document.getElementById("nightModeToggle").checked = true;
+      }
+    };
+  </script>
+</body>
+</html>
+<script>
+  const sidebar = document.querySelector('.sidebar');
+
+  // Lưu vị trí cuộn khi rời trang
+  window.addEventListener("beforeunload", function () {
+    localStorage.setItem("sidebarScroll", sidebar.scrollTop);
+  });
+
+  // Khôi phục vị trí khi trang load lại
+  window.addEventListener("load", function () {
+    const scroll = localStorage.getItem("sidebarScroll");
+    if (scroll) {
+      sidebar.scrollTop = parseInt(scroll, 10);
+    }
+  });
+</script>
