@@ -35,7 +35,7 @@ def parse_epub(filepath):
         if chapter_title.strip().lower() in banned_titles:
             continue
 
-        # Bỏ nếu không bắt đầu bằng "Chapter"
+        
         if not chapter_title.lower().startswith("chapter"):
             continue
 
