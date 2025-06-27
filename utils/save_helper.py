@@ -25,7 +25,6 @@ def save_book_to_folder(title, chapters):
             "file": filename
         })
 
-    # Append new chapters to index.json
     index_path = os.path.join(base_path, "index.json")
     with open(index_path, "a", encoding="utf-8") as f:
         for entry in index_json:
