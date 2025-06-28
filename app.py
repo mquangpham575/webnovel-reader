@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 from utils.epub_parser import parse_epub
-from utils.save_helper import save_book_to_folder
-from utils.save_helper import save_last_read
+from utils.save_helper import save_book_to_folder, save_last_read, load_last_read
 import os
 import json
 
@@ -32,21 +31,22 @@ def upload():
     if file and file.filename.endswith('.epub'):
         save_path = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
         os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
-        file.save(save_path)
 
-        title, chapters = parse_epub(save_path)
-        save_book_to_folder(title, chapters)
+        # 👉 Nếu file đã tồn tại thì không làm gì cả
+        if not os.path.exists(save_path):
+            file.save(save_path)
+            title, chapters = parse_epub(save_path)
+            save_book_to_folder(title, chapters)
+        # Ngược lại: bỏ qua hoàn toàn
     return redirect(url_for('index'))
 
 @app.route('/book/<title>')
 def view_chapters(title):
     chapter_list = load_index(title)
-    from utils.save_helper import load_last_read
     last_read = load_last_read()
     last_chapter = last_read.get(title)
 
     return render_template('ChapterList.html', title=title, chapters=chapter_list, last_chapter=last_chapter)
-
 
 @app.route('/book/<title>/<int:chapter_id>')
 def read_chapter(title, chapter_id):
@@ -68,7 +68,6 @@ def read_chapter(title, chapter_id):
                            chapter_title=chap_info['title'],
                            chapter_id=chapter_id,
                            chapter_list=[c['title'] for c in chapter_list])
-
 
 if __name__ == '__main__':
     app.run(debug=True)
