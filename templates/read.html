@@ -4,11 +4,17 @@
   <meta charset="UTF-8">
   <title>{{ title }}</title>
 
+  <!-- Night Mode khởi động sớm -->
   <script>
     if (localStorage.getItem("nightMode") === "on") {
       document.documentElement.classList.add("night");
     }
   </script>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Lora&family=Roboto&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.cdnfonts.com/css/opendyslexic" rel="stylesheet">
 
   <link rel="stylesheet" href="{{ url_for('static', filename='styles/read.css') }}">
 </head>
@@ -19,14 +25,13 @@
       <a class="home-icon" href="{{ url_for('index') }}">⌂</a>
       <span>{{ title }}</span>
     </h2>
-
     <div class="chapter-list">
-    {% for i in range(chapter_list|length) %}
-      <a href="{{ url_for('read_chapter', title=title, chapter_id=i) }}"
-         class="{% if i == chapter_id %}active{% endif %}">
-        {{ chapter_list[i] }}
-      </a>
-    {% endfor %}
+      {% for i in range(chapter_list|length) %}
+        <a href="{{ url_for('read_chapter', title=title, chapter_id=i) }}"
+           class="{% if i == chapter_id %}active{% endif %}">
+          {{ chapter_list[i] }}
+        </a>
+      {% endfor %}
     </div>
   </div>
 
@@ -37,22 +42,19 @@
   </div>
 
   <div id="settings-panel">
-    <label>Font:
-      <select id="fontSelect">
-        <option value="Georgia">Georgia</option>
-        <option value="Arial">Arial</option>
-        <option value="Times New Roman">Times New Roman</option>
-      </select>
-    </label><br><br>
+    <div class="font-options">
+      <button class="font-button active" data-font="Georgia">Default</button>
+      <button class="font-button" data-font="'OpenDyslexic', sans-serif">Dyslexic</button>
+      <button class="font-button" data-font="'Roboto', sans-serif">Roboto</button>
+      <button class="font-button" data-font="'Lora', serif">Lora</button>
+    </div><br><br>
 
-    <label>Font size:
-      <select id="fontSizeSelect">
-        <option value="16px">16px</option>
-        <option value="18px" selected>18px</option>
-        <option value="20px">20px</option>
-        <option value="22px">22px</option>
-      </select>
-    </label><br><br>
+    <div class="font-size-options">
+      <button class="font-size-button active" data-size="18px">18px</button>
+      <button class="font-size-button" data-size="20px">20px</button>
+      <button class="font-size-button" data-size="22px">22px</button>
+      <button class="font-size-button" data-size="24px">24px</button>
+    </div><br><br>
   </div>
 
   <div class="nav-buttons">
@@ -73,8 +75,7 @@
     function toggleNightMode() {
       const isNight = document.documentElement.classList.toggle("night");
       localStorage.setItem("nightMode", isNight ? "on" : "off");
-      const icon = document.querySelector(".night-toggle");
-      icon.textContent = isNight ? "☀️" : "🌙";
+      document.querySelector(".night-toggle").textContent = isNight ? "☀️" : "🌙";
     }
 
     window.onload = function () {
@@ -82,31 +83,65 @@
       const size = localStorage.getItem("fontSize");
       const night = localStorage.getItem("nightMode");
 
+      // Set font family
       if (font) {
         document.querySelector(".reader").style.fontFamily = font;
-        document.getElementById("fontSelect").value = font;
+        document.querySelectorAll('.font-button').forEach(button => {
+          if (button.getAttribute('data-font') === font) {
+            button.classList.add('active');
+          }
+        });
       }
 
+      // Set font size - only for paragraph (<p>) tags inside .reader
       if (size) {
-        document.querySelector(".reader").style.fontSize = size;
-        document.getElementById("fontSizeSelect").value = size;
+        document.querySelectorAll('.reader p').forEach(p => {
+          p.style.fontSize = size;
+        });
+        document.querySelectorAll('.font-size-button').forEach(button => {
+          if (button.getAttribute('data-size') === size) {
+            button.classList.add('active');
+          }
+        });
       }
 
+      // Set night mode icon
       const nightIcon = document.querySelector(".night-toggle");
-      if (night === "on") {
-        document.documentElement.classList.add("night");
-        if (nightIcon) nightIcon.textContent = "☀️";
-      } else {
-        if (nightIcon) nightIcon.textContent = "🌙";
-      }
+      nightIcon.textContent = (night === "on") ? "☀️" : "🌙";
 
+      // Sidebar scroll memory
       const sidebar = document.querySelector('.sidebar');
       const savedScroll = localStorage.getItem("sidebarScroll");
       if (savedScroll) sidebar.scrollTop = parseInt(savedScroll, 10);
-
       window.addEventListener("beforeunload", function () {
         localStorage.setItem("sidebarScroll", sidebar.scrollTop);
       });
+
+      const activeChapter = document.querySelector('.chapter-list a.active');
+      if (activeChapter) {
+        const sidebarRect = sidebar.getBoundingClientRect();
+        const activeRect = activeChapter.getBoundingClientRect();
+        if (activeRect.top < sidebarRect.top || activeRect.bottom > sidebarRect.bottom) {
+          sidebar.scrollTop += activeRect.top - sidebarRect.top - 100;
+        }
+      }
+
+      // General logic for both font and font-size button click events
+      function applySetting(type, attribute, buttonsSelector, readerSelector) {
+        document.querySelectorAll(buttonsSelector).forEach(button => {
+          button.addEventListener('click', () => {
+            const value = button.getAttribute(attribute);
+            document.querySelector(readerSelector).style[type] = value;
+            localStorage.setItem(type, value);
+            document.querySelectorAll(buttonsSelector).forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+          });
+        });
+      }
+
+      // Apply font and font size changes
+      applySetting('fontFamily', 'data-font', '.font-button', '.reader');
+      applySetting('fontSize', 'data-size', '.font-size-button', '.reader p');
     };
   </script>
 </body>
