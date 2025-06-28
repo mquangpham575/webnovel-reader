@@ -26,11 +26,10 @@ def parse_epub(filepath):
         heading = body.find(['h1', 'h2', 'h3'])
         if heading:
             heading_text = heading.get_text(strip=True)
-            chapter_title = ' '.join(heading_text.split())  # chuẩn hóa: xóa khoảng trắng dư
+            chapter_title = ' '.join(heading_text.split())  
         else:
-            continue  # bỏ nếu không có heading
+            continue  
 
-        # Bỏ các tiêu đề không cần thiết
         banned_titles = {"information", "table of contents", "shadow slave"}
         if chapter_title.strip().lower() in banned_titles:
             continue
@@ -39,7 +38,6 @@ def parse_epub(filepath):
         if not chapter_title.lower().startswith("chapter"):
             continue
 
-        # Bỏ nếu đã gặp tiêu đề tương tự (không phân biệt hoa thường)
         normalized_title = chapter_title.lower()
         if normalized_title in seen_titles:
             continue

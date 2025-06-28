@@ -32,12 +32,10 @@ def upload():
         save_path = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
         os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
-        # 👉 Nếu file đã tồn tại thì không làm gì cả
         if not os.path.exists(save_path):
             file.save(save_path)
             title, chapters = parse_epub(save_path)
             save_book_to_folder(title, chapters)
-        # Ngược lại: bỏ qua hoàn toàn
     return redirect(url_for('index'))
 
 @app.route('/book/<title>')

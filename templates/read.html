@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <title>{{ title }}</title>
 
-  <!-- Bật Night Mode sớm nếu có -->
   <script>
     if (localStorage.getItem("nightMode") === "on") {
       document.documentElement.classList.add("night");
@@ -15,7 +14,6 @@
 </head>
 
 <body>
-  <!-- Thanh chương -->
   <div class="sidebar">
     <h2>
       <a class="home-icon" href="{{ url_for('index') }}">⌂</a>
@@ -32,14 +30,12 @@
     </div>
   </div>
 
-  <!-- Khu vực đọc truyện -->
   <div class="reader">
     <div class="night-toggle" onclick="toggleNightMode()">🌙</div>
     <div class="settings" onclick="toggleSettings()">⚙️</div>
     <div>{{ chapter | safe }}</div>
   </div>
 
-  <!-- Cài đặt người dùng -->
   <div id="settings-panel">
     <label>Font:
       <select id="fontSelect">
@@ -59,7 +55,6 @@
     </label><br><br>
   </div>
 
-  <!-- Nút chuyển chương -->
   <div class="nav-buttons">
     {% if chapter_id > 0 %}
       <a href="{{ url_for('read_chapter', title=title, chapter_id=chapter_id - 1) }}" class="left">&#10094;</a>
@@ -69,7 +64,6 @@
     {% endif %}
   </div>
 
-  <!-- Script xử lý giao diện -->
   <script>
     function toggleSettings() {
       const panel = document.getElementById("settings-panel");
