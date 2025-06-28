@@ -83,7 +83,6 @@
       const size = localStorage.getItem("fontSize");
       const night = localStorage.getItem("nightMode");
 
-      // Set font family
       if (font) {
         document.querySelector(".reader").style.fontFamily = font;
         document.querySelectorAll('.font-button').forEach(button => {
@@ -93,7 +92,6 @@
         });
       }
 
-      // Set font size - only for paragraph (<p>) tags inside .reader
       if (size) {
         document.querySelectorAll('.reader p').forEach(p => {
           p.style.fontSize = size;
@@ -105,11 +103,9 @@
         });
       }
 
-      // Set night mode icon
       const nightIcon = document.querySelector(".night-toggle");
       nightIcon.textContent = (night === "on") ? "☀️" : "🌙";
 
-      // Sidebar scroll memory
       const sidebar = document.querySelector('.sidebar');
       const savedScroll = localStorage.getItem("sidebarScroll");
       if (savedScroll) sidebar.scrollTop = parseInt(savedScroll, 10);
@@ -126,7 +122,6 @@
         }
       }
 
-      // General logic for both font and font-size button click events
       function applySetting(type, attribute, buttonsSelector, readerSelector) {
         document.querySelectorAll(buttonsSelector).forEach(button => {
           button.addEventListener('click', () => {
@@ -139,7 +134,6 @@
         });
       }
 
-      // Apply font and font size changes
       applySetting('fontFamily', 'data-font', '.font-button', '.reader');
       applySetting('fontSize', 'data-size', '.font-size-button', '.reader p');
     };
