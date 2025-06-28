@@ -11,7 +11,6 @@
     }
   </script>
 
-  <!-- Đường dẫn đến file CSS tách riêng -->
   <link rel="stylesheet" href="{{ url_for('static', filename='styles/read.css') }}">
 </head>
 
@@ -19,19 +18,23 @@
   <!-- Thanh chương -->
   <div class="sidebar">
     <h2>
-      <a href="{{ url_for('index') }}">⌂</a>
+      <a class="home-icon" href="{{ url_for('index') }}">⌂</a>
       <span>{{ title }}</span>
     </h2>
+
+    <div class="chapter-list">
     {% for i in range(chapter_list|length) %}
       <a href="{{ url_for('read_chapter', title=title, chapter_id=i) }}"
          class="{% if i == chapter_id %}active{% endif %}">
         {{ chapter_list[i] }}
       </a>
     {% endfor %}
+    </div>
   </div>
 
   <!-- Khu vực đọc truyện -->
   <div class="reader">
+    <div class="night-toggle" onclick="toggleNightMode()">🌙</div>
     <div class="settings" onclick="toggleSettings()">⚙️</div>
     <div>{{ chapter | safe }}</div>
   </div>
@@ -54,8 +57,6 @@
         <option value="22px">22px</option>
       </select>
     </label><br><br>
-
-    <label><input type="checkbox" id="nightModeToggle"> Night light 🌙</label>
   </div>
 
   <!-- Nút chuyển chương -->
@@ -75,21 +76,12 @@
       panel.style.display = (panel.style.display === "none") ? "block" : "none";
     }
 
-    document.getElementById("fontSelect").addEventListener("change", function () {
-      document.querySelector(".reader").style.fontFamily = this.value;
-      localStorage.setItem("font", this.value);
-    });
-
-    document.getElementById("fontSizeSelect").addEventListener("change", function () {
-      document.querySelector(".reader").style.fontSize = this.value;
-      localStorage.setItem("fontSize", this.value);
-    });
-
-    document.getElementById("nightModeToggle").addEventListener("change", function () {
-      const isNight = this.checked;
-      document.documentElement.classList.toggle("night", isNight);
+    function toggleNightMode() {
+      const isNight = document.documentElement.classList.toggle("night");
       localStorage.setItem("nightMode", isNight ? "on" : "off");
-    });
+      const icon = document.querySelector(".night-toggle");
+      icon.textContent = isNight ? "☀️" : "🌙";
+    }
 
     window.onload = function () {
       const font = localStorage.getItem("font");
@@ -106,9 +98,12 @@
         document.getElementById("fontSizeSelect").value = size;
       }
 
+      const nightIcon = document.querySelector(".night-toggle");
       if (night === "on") {
         document.documentElement.classList.add("night");
-        document.getElementById("nightModeToggle").checked = true;
+        if (nightIcon) nightIcon.textContent = "☀️";
+      } else {
+        if (nightIcon) nightIcon.textContent = "🌙";
       }
 
       const sidebar = document.querySelector('.sidebar');

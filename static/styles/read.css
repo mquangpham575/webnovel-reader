@@ -31,7 +31,6 @@ body {
   font-size: 25px;
   margin-right: 8px;
   color: #444;
-  text-decoration: none;
 }
 
 .sidebar a {
@@ -71,7 +70,6 @@ body {
   margin-bottom: 16px;
 }
 
-/* Scrollbar giống nhau cho .reader và .sidebar */
 .reader::-webkit-scrollbar,
 .sidebar::-webkit-scrollbar {
   width: 10px;
@@ -141,17 +139,19 @@ html.night .reader::-webkit-scrollbar-thumb {
   z-index: 1001;
 }
 
+.settings:hover {
+  transform: scale(1.1);
+}
+
 #settings-panel {
   display: none;
   position: fixed;
-  top: 55px;
-  right: 20px;
+  top: 20px;
+  right: 70px;
   background: #fff;
   color: #000;
   padding: 15px;
   border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  z-index: 1000;
 }
 
 /* --- Night Mode --- */
@@ -202,4 +202,22 @@ html.night .reader blockquote,
 html.night .reader pre,
 html.night .reader code {
   background: #1e1e1e !important;
+}
+
+.night-toggle {
+  position: fixed;
+  top: 50px;
+  right: 20px; 
+  font-size: 22px;
+  color: white;
+  background: transparent;
+  border-radius: 10px;
+  padding: 8px 10px;
+  cursor: pointer;
+  z-index: 1001;
+  transition: transform 0.2s;
+}
+
+.night-toggle:hover {
+  transform: scale(1.1);
 }
