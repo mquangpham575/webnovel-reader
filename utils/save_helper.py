@@ -37,9 +37,7 @@ def save_book_to_folder(title, chapters):
 def load_last_read():
     if os.path.exists(LAST_READ_FILE):
         with open(LAST_READ_FILE, "r", encoding="utf-8") as f:
-            content = f.read().strip()
-            if content:
-                return json.loads(content)
+            return json.load(f)
     return {}
 
 def save_last_read(title, chapter_id):
