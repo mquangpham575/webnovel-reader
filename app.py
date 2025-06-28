@@ -23,7 +23,7 @@ def index():
     books = []
     if os.path.exists(STORY_FOLDER):
         books = [d for d in os.listdir(STORY_FOLDER) if os.path.isdir(os.path.join(STORY_FOLDER, d))]
-    return render_template('index.html', books=books)
+    return render_template('Home.html', books=books)
 
 @app.route('/upload', methods=['POST'])
 def upload():
@@ -46,7 +46,7 @@ def view_chapters(title):
     for i, chap in enumerate(chapter_list):
         print(f"{i}: {chap}")
 
-    return render_template('chapters.html', title=title, chapters=chapter_list)
+    return render_template('ChapterList.html', title=title, chapters=chapter_list)
 
 
 @app.route('/book/<title>/<int:chapter_id>')
