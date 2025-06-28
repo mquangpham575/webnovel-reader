@@ -1,58 +1,80 @@
+body {
+  font-family: 'Segoe UI', sans-serif;
+  max-width: 700px;
+  margin: 40px auto;
+  padding: 20px;
+  line-height: 1.6;
+  background-color: #121212;
+  color: #e0e0e0;
+}
 
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      max-width: 700px;
-      margin: 40px auto;
-      padding: 20px;
-      line-height: 1.6;
-      background-color: #f9f9f9;
-    }
-    h1 {
-      font-size: 28px;
-      text-align: center;
-      color: #2c3e50;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    h1::before {
-      content: "📘";
-      margin-right: 10px;
-      font-size: 30px;
-    }
-    ul {
-      list-style-type: none;
-      padding-left: 0;
-      margin-top: 30px;
-    }
-    li {
-      background: white;
-      border-radius: 8px;
-      margin: 10px 0;
-      padding: 12px 18px;
-      transition: background 0.2s, box-shadow 0.2s;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-    }
-    li:hover {
-      background: #eef6ff;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
-    }
-    a {
-      text-decoration: none;
-      color: #34495e;
-      font-weight: 500;
-      display: block;
-    }
-    a:hover {
-      color: #2980b9;
-    }
-    .back-link {
-      display: inline-block;
-      margin-top: 30px;
-      text-decoration: none;
-      color: #7f8c8d;
-      font-size: 16px;
-    }
-    .back-link:hover {
-      text-decoration: underline;
-    }
+h1 {
+  font-size: 28px;
+  text-align: center;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+h1::before {
+  content: "📘";
+  margin-right: 10px;
+  font-size: 30px;
+}
+
+ul {
+  list-style-type: none;
+  padding-left: 0;
+  margin-top: 30px;
+}
+
+li {
+  background: #1e1e1e;
+  border-radius: 8px;
+  margin: 10px 0;
+  padding: 12px 18px;
+  transition: background 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 5px rgba(255, 255, 255, 0.05);
+}
+
+li:hover {
+  background: #2a2a2a;
+  box-shadow: 0 3px 8px rgba(255, 255, 255, 0.1);
+}
+
+a {
+  text-decoration: none;
+  color: #ffffff;
+  font-weight: 500;
+  display: block;
+}
+
+.back-link {
+  display: inline-block;
+  margin-top: 30px;
+  text-decoration: none;
+  color: #b0bec5;
+  font-size: 16px;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+  color: #ffffff;
+}
+
+/* Nút "Đọc tiếp" */
+.continue-button {
+  display: inline-block;
+  margin-bottom: 20px;
+  padding: 10px 16px;
+  background-color: #1e1e1e;
+  color: white;
+  border-radius: 5px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.continue-button:hover {
+  background-color: #2a2a2a;
+}

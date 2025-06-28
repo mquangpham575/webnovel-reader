@@ -7,6 +7,14 @@
 </head>
 <body>
   <h1>{{ title }}</h1>
+
+  {% if last_chapter is not none %}
+  <a href="{{ url_for('read_chapter', title=title, chapter_id=last_chapter) }}"
+     class="continue-button">
+    ▶ Đọc tiếp: Chapter {{ last_chapter + 1 }}
+  </a>
+  {% endif %}
+
   <ul>
     {% for chapter in chapters %}
       <li>
@@ -16,6 +24,7 @@
       </li>
     {% endfor %}
   </ul>
+
   <a class="back-link" href="{{ url_for('index') }}">⬅️ Quay lại danh sách truyện</a>
 </body>
 </html>

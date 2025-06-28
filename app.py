@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for
 from utils.epub_parser import parse_epub
 from utils.save_helper import save_book_to_folder
+from utils.save_helper import save_last_read
 import os
 import json
 
@@ -40,13 +41,11 @@ def upload():
 @app.route('/book/<title>')
 def view_chapters(title):
     chapter_list = load_index(title)
-    
-    # ✅ In log kiểm tra
-    print(f"[DEBUG] Loaded {len(chapter_list)} chapters for: {title}")
-    for i, chap in enumerate(chapter_list):
-        print(f"{i}: {chap}")
+    from utils.save_helper import load_last_read
+    last_read = load_last_read()
+    last_chapter = last_read.get(title)
 
-    return render_template('ChapterList.html', title=title, chapters=chapter_list)
+    return render_template('ChapterList.html', title=title, chapters=chapter_list, last_chapter=last_chapter)
 
 
 @app.route('/book/<title>/<int:chapter_id>')
@@ -61,12 +60,15 @@ def read_chapter(title, chapter_id):
     with open(file_path, 'r', encoding='utf-8') as f:
         html = f.read()
 
+    save_last_read(title, chapter_id)
+
     return render_template('read.html',
                            title=title,
                            chapter=html,
                            chapter_title=chap_info['title'],
                            chapter_id=chapter_id,
                            chapter_list=[c['title'] for c in chapter_list])
+
 
 if __name__ == '__main__':
     app.run(debug=True)
