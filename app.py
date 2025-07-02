@@ -68,4 +68,5 @@ def read_chapter(title, chapter_id):
                            chapter_list=[c['title'] for c in chapter_list])
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
