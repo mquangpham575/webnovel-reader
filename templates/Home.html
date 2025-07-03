@@ -7,16 +7,22 @@
 </head>
 <body>
   <h1>📥 Tải truyện lên</h1>
+
   <form action="/upload" method="post" enctype="multipart/form-data">
     <input type="file" name="file" accept=".epub">
     <button type="submit">Tải lên</button>
   </form>
 
   <h2>📚 Truyện đã thêm</h2>
-  <ul>
+  <ul class="book-list">
     {% for title in books %}
-      <li><a href="{{ url_for('view_chapters', title=title) }}">{{ title }}</a></li>
+      <li class="book-item">
+        <a href="{{ url_for('view_chapters', title=title) }}">
+          {{ title }}
+        </a>
+      </li>
     {% endfor %}
   </ul>
+
 </body>
 </html>

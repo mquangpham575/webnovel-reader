@@ -1,68 +1,76 @@
+body {
+  font-family: 'Segoe UI', sans-serif;
+  max-width: 700px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: #121212;
+}
 
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      max-width: 700px;
-      margin: 40px auto;
-      padding: 20px;
-      background-color: #121212;
-    }
+h1, h2 {
+  text-align: center;
+  color: #eef6ff;
+}
 
-    h1, h2 {
-      text-align: center;
-      color: #eef6ff;
-    }
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 40px;
+}
 
-    form {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 40px;
-    }
+input[type="file"] {
+  background-color: #1e1e1e;
+  padding: 8px;
+  border: 1px solid #eef6ff;
+  border-radius: 5px;
+  color: #eef6ff;
+}
 
-    input[type="file"] {
-      background-color: #1e1e1e;
-      padding: 8px;
-      border: 1px solid #eef6ff;
-      border-radius: 5px;
-      color: #eef6ff;
-    }
-    
+button {
+  padding: 10px 20px;
+  background-color: #1e1e1e;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
 
-    button {
-      padding: 10px 20px;
-      background-color: #1e1e1e;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-weight: bold;
-    }
+button:hover {
+  background-color: #2a2a2a;
+}
 
-    button:hover {
-      background-color: #2a2a2a;
-    }
+ul {
+  list-style-type: none;
+  padding-left: 0;
+}
 
-    ul {
-      list-style-type: none;
-      padding-left: 0;
-    }
+.book-item {
+  margin: 8px 0;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  transition: background 0.2s, box-shadow 0.2s;
+}
 
-    li {
-      margin: 8px 0;
-      background: #1e1e1e;
-      padding: 12px 16px;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-      transition: background 0.2s, box-shadow 0.2s;
-    }
+.book-item a {
+  display: block;
+  width: 100%;
+  background-color: #1e1e1e;
+  padding: 12px 16px;
+  border-radius: 8px;
+  color: #eef6ff;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
 
-    li:hover {
-      background-color: #2a2a2a;
-    }
+.book-item a:hover {
+  background-color: #2a2a2a;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
 
-    a {
-      text-decoration: none;
-      color: #eef6ff;
-      font-weight: 500;
-    }
+a {
+  text-decoration: none;
+  color: #eef6ff;
+  font-weight: 500;
+}
