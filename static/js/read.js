@@ -24,28 +24,29 @@ if (!localStorage.getItem("sidebarCollapsed")) {
 }
 
 window.onload = function () {
-  const font = localStorage.getItem("font");
-  const size = localStorage.getItem("fontSize");
+  // Áp dụng mặc định nếu chưa từng chọn
+  const font = localStorage.getItem("font") || "Georgia";
+  const size = localStorage.getItem("fontSize") || "18px";
+
+  // Áp dụng font-family
+  document.querySelector(".reader").style.fontFamily = font;
+  localStorage.setItem("font", font);
+
+  document.querySelectorAll('.font-button').forEach(button => {
+    const btnFont = button.getAttribute('data-font');
+    button.classList.toggle('active', btnFont === font);
+  });
+
+  // Áp dụng font-size bằng CSS variable
+  document.querySelector(".chapter-content").style.setProperty('--reader-font-size', size);
+  localStorage.setItem("fontSize", size);
+
+  document.querySelectorAll('.font-size-button').forEach(button => {
+    const btnSize = button.getAttribute('data-size');
+    button.classList.toggle('active', btnSize === size);
+  });
+
   const night = localStorage.getItem("nightMode");
-
-  if (font) {
-    document.querySelector(".reader").style.fontFamily = font;
-    document.querySelectorAll('.font-button').forEach(button => {
-      if (button.getAttribute('data-font') === font) {
-        button.classList.add('active');
-      }
-    });
-  }
-
-  if (size) {
-    document.querySelector(".chapter-content").style.setProperty('--reader-font-size', size);
-    document.querySelectorAll('.font-size-button').forEach(button => {
-      if (button.getAttribute('data-size') === size) {
-        button.classList.add('active');
-      }
-    });
-  }
-
   const nightIcon = document.querySelector(".night-toggle");
   nightIcon.textContent = (night === "on") ? "☀️" : "🌙";
 
