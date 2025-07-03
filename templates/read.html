@@ -42,7 +42,9 @@
     <div class="sidebar-toggle" id="toggle-sidebar" title="Ẩn/Hiện menu">☰</div>
     <div class="settings" onclick="toggleSettings()">⚙️</div>
     
-    <div>{{ chapter | safe }}</div>
+    <div class="chapter-content">
+      {{ chapter | safe }}
+    </div>
 
     {% if chapter_id > 0 or chapter_id + 1 < chapter_list|length %}
       <div class="chapter-navigation">
@@ -60,14 +62,14 @@
 
   <div id="settings-panel">
     <div class="font-options">
-      <button class="font-button active" data-font="Georgia">Default</button>
+      <button class="font-button" data-font="Georgia">Georgia</button>
       <button class="font-button" data-font="'OpenDyslexic', sans-serif">Dyslexic</button>
       <button class="font-button" data-font="'Roboto', sans-serif">Roboto</button>
       <button class="font-button" data-font="'Lora', serif">Lora</button>
     </div><br><br>
 
     <div class="font-size-options">
-      <button class="font-size-button active" data-size="18px">18px</button>
+      <button class="font-size-button" data-size="18px">18px</button>
       <button class="font-size-button" data-size="20px">20px</button>
       <button class="font-size-button" data-size="22px">22px</button>
       <button class="font-size-button" data-size="24px">24px</button>

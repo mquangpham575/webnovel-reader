@@ -38,9 +38,7 @@ window.onload = function () {
   }
 
   if (size) {
-    document.querySelectorAll('.reader p').forEach(p => {
-      p.style.fontSize = size;
-    });
+    document.querySelector(".chapter-content").style.setProperty('--reader-font-size', size);
     document.querySelectorAll('.font-size-button').forEach(button => {
       if (button.getAttribute('data-size') === size) {
         button.classList.add('active');
@@ -72,18 +70,25 @@ window.onload = function () {
     sidebar.classList.add("collapsed");
   }
 
-  function applySetting(type, attribute, buttonsSelector, readerSelector) {
-    document.querySelectorAll(buttonsSelector).forEach(button => {
-      button.addEventListener('click', () => {
-        const value = button.getAttribute(attribute);
-        document.querySelector(readerSelector).style[type] = value;
-        localStorage.setItem(type, value);
-        document.querySelectorAll(buttonsSelector).forEach(btn => btn.classList.remove('active'));
-        button.classList.add('active');
-      });
+  // Chọn font family
+  document.querySelectorAll('.font-button').forEach(button => {
+    button.addEventListener('click', () => {
+      const font = button.getAttribute('data-font');
+      document.querySelector(".reader").style.fontFamily = font;
+      localStorage.setItem("font", font);
+      document.querySelectorAll('.font-button').forEach(btn => btn.classList.remove('active'));
+      button.classList.add('active');
     });
-  }
+  });
 
-  applySetting('fontFamily', 'data-font', '.font-button', '.reader');
-  applySetting('fontSize', 'data-size', '.font-size-button', '.reader p');
+  // Chọn font size bằng CSS variable
+  document.querySelectorAll('.font-size-button').forEach(button => {
+    button.addEventListener('click', () => {
+      const size = button.getAttribute('data-size');
+      document.querySelector(".chapter-content").style.setProperty('--reader-font-size', size);
+      localStorage.setItem("fontSize", size);
+      document.querySelectorAll('.font-size-button').forEach(btn => btn.classList.remove('active'));
+      button.classList.add('active');
+    });
+  });
 };

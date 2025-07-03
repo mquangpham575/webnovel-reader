@@ -98,9 +98,17 @@ h2 {
 }
 
 .reader p {
-  font-size: 18px; 
+   
   line-height: 1.7;
   margin-bottom: 16px;
+}
+
+.chapter-content {
+  --reader-font-size: 18px; /* cỡ mặc định */
+}
+
+.chapter-content *:not(h2) {
+  font-size: var(--reader-font-size);
 }
 
 /* --- Scrollbar --- */
