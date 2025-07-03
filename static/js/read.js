@@ -24,6 +24,14 @@ if (!localStorage.getItem("sidebarCollapsed")) {
 }
 
 window.onload = function () {
+  // ✅ Mặc định bật night mode nếu chưa có localStorage
+  if (!localStorage.getItem("nightMode")) {
+    localStorage.setItem("nightMode", "on");
+  }
+  if (localStorage.getItem("nightMode") === "on") {
+    document.documentElement.classList.add("night");
+  }
+
   // Áp dụng mặc định nếu chưa từng chọn
   const font = localStorage.getItem("font") || "Georgia";
   const size = localStorage.getItem("fontSize") || "18px";
@@ -46,9 +54,8 @@ window.onload = function () {
     button.classList.toggle('active', btnSize === size);
   });
 
-  const night = localStorage.getItem("nightMode");
   const nightIcon = document.querySelector(".night-toggle");
-  nightIcon.textContent = (night === "on") ? "☀️" : "🌙";
+  nightIcon.textContent = (localStorage.getItem("nightMode") === "on") ? "☀️" : "🌙";
 
   const sidebar = document.querySelector('.sidebar');
   const savedScroll = localStorage.getItem("sidebarScroll");
