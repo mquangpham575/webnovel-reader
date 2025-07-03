@@ -1,3 +1,4 @@
+/* --- Global Styles --- */
 body {
   margin: 0;
   font-family: 'Georgia', serif;
@@ -8,20 +9,47 @@ body {
   transition: background 0.3s, color 0.3s;
 }
 
+/* --- Title --- */
 h2 {
   font-size: 30px;
 }
 
-.sidebar, .reader {
-  transition: background 0.3s, color 0.3s;
-}
-
+/* --- Sidebar --- */
 .sidebar {
   width: 280px;
   background: #fff;
   border-right: 1px solid #ccc;
   overflow-y: auto;
-  padding: 20px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  transform: translateX(0%);
+  opacity: 1;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  z-index: 10;
+}
+
+.sidebar-header {
+  position: sticky;
+  top: 0;
+  background-color: #f5f5f5;
+  padding: 20px 0;
+  z-index: 10;
+}
+
+.sidebar-header h2 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  font-size: 22px;
+}
+
+.sidebar-header .home-icon {
+  font-size: 30px;
+  text-decoration: none;
+  color: #444;
 }
 
 .sidebar h2 {
@@ -57,6 +85,7 @@ h2 {
   font-weight: bold;
 }
 
+/* --- Reader Styles --- */
 .reader {
   flex: 1;
   overflow-y: auto;
@@ -69,11 +98,12 @@ h2 {
 }
 
 .reader p {
-  font-size: 18px; /* Giá trị mặc định */
+  font-size: 18px; 
   line-height: 1.7;
   margin-bottom: 16px;
 }
 
+/* --- Scrollbar --- */
 .reader::-webkit-scrollbar,
 .sidebar::-webkit-scrollbar {
   width: 10px;
@@ -102,34 +132,7 @@ html.night .reader::-webkit-scrollbar-thumb {
   background-color: #666;
 }
 
-.nav-buttons {
-  position: fixed;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 100%;
-  pointer-events: none;
-}
-
-.nav-buttons a {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 36px;
-  color: #444;
-  text-decoration: none;
-  pointer-events: auto;
-  opacity: 0.5;
-  transition: opacity 0.2s ease;
-}
-
-.nav-buttons a:hover {
-  opacity: 1;
-  color: black;
-}
-
-.nav-buttons a.left { left: 330px; }
-.nav-buttons a.right { right: 40px; }
-
+/* --- Setting button --- */
 .settings {
   position: fixed;
   top: 10px;
@@ -156,78 +159,6 @@ html.night .reader::-webkit-scrollbar-thumb {
   color: white;
   padding: 15px;
   border-radius: 10px;
-}
-
-/* --- Night Mode --- */
-html.night {
-  background: #333 !important;
-  color: #e0e0e0 !important;
-}
-
-html.night .sidebar {
-  background: #1e1e1e !important;
-  color: #eee !important;
-}
-
-html.night .sidebar a {
-  color: #ccc !important;
-}
-
-html.night .sidebar a:hover {
-  background: #333 !important;
-}
-
-html.night .sidebar a.active {
-  color: #000 !important;
-}
-
-html.night .settings {
-  color: #000 !important;
-}
-
-html.night .nav-buttons a {
-  color: #ccc !important;
-}
-
-html.night .reader {
-  background-color: #333 !important;
-  color: #e0e0e0 !important;
-}
-
-html.night .reader *,
-html.night .reader blockquote,
-html.night .reader pre,
-html.night .reader code {
-  color: inherit !important;
-  background: transparent !important;
-}
-
-html.night .reader blockquote,
-html.night .reader pre,
-html.night .reader code {
-  background: #1e1e1e !important;
-}
-
-.night-toggle {
-  position: fixed;
-  top: 50px;
-  right: 15px; 
-  font-size: 22px;
-  color: white;
-  background: transparent;
-  border-radius: 10px;
-  padding: 8px 10px;
-  cursor: pointer;
-  z-index: 1001;
-  transition: transform 0.2s;
-}
-
-.night-toggle:hover {
-  transform: scale(1.1);
-}
-
-.reader {
-  font-family: 'Nunito Sans', sans-serif;
 }
 
 .font-options {
@@ -284,4 +215,136 @@ html.night .reader code {
 
 .font-size-button:hover {
   background-color: #1c6e8c;
+}
+
+/* --- Night Mode Toggle --- */
+.night-toggle {
+  position: fixed;
+  top: 50px;
+  right: 15px; 
+  font-size: 22px;
+  color: white;
+  background: transparent;
+  border-radius: 10px;
+  padding: 8px 10px;
+  cursor: pointer;
+  z-index: 1001;
+  transition: transform 0.2s;
+}
+
+.night-toggle:hover {
+  transform: scale(1.1);
+}
+
+/* --- Chapter Nav --- */
+.chapter-navigation {
+  margin-top: 80px;
+  padding: 20px 0;
+  text-align: center;
+}
+
+.chapter-nav-button {
+  display: inline-block;
+  margin: 10px 20px;
+  padding: 12px 24px;
+  font-size: 22px;
+  color: white;
+  background: #1c6e8c;
+  border: none;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+
+.chapter-nav-button:hover {
+  background: #155e78;
+}
+
+/* --- Sidebar Toggle --- */
+.sidebar-toggle {
+  position: fixed;
+  top: 90px; 
+  right: 20px;
+  font-size: 22px;
+  color: #333;
+  background: transparent;
+  border-radius: 10px;
+  padding: 8px 10px;
+  cursor: pointer;
+  z-index: 1001;
+  transition: transform 0.2s;
+}
+
+.sidebar-toggle:hover {
+  transform: scale(1.1);
+}
+
+
+.sidebar.collapsed {
+  transform: translateX(-100%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* --- Night Mode --- */
+html.night {
+  background: #333 !important;
+  color: #e0e0e0 !important;
+}
+
+html.night .sidebar {
+  background: #1e1e1e !important;
+  color: #eee !important;
+}
+
+html.night .sidebar a {
+  color: #ccc !important;
+}
+
+html.night .sidebar a:hover {
+  background: #333 !important;
+}
+
+html.night .sidebar a.active {
+  color: #000 !important;
+}
+
+html.night .settings {
+  color: #000 !important;
+}
+
+html.night .nav-buttons a {
+  color: #ccc !important;
+}
+
+html.night .reader {
+  background-color: #333 !important;
+  color: #e0e0e0 !important;
+}
+
+html.night .reader *,
+html.night .reader blockquote,
+html.night .reader pre,
+html.night .reader code {
+  color: inherit !important;
+  background: transparent !important;
+}
+
+html.night .reader blockquote,
+html.night .reader pre,
+html.night .reader code {
+  background: #1e1e1e !important;
+}
+
+html.night .sidebar-header {
+  background-color: #1e1e1e !important;
+  color: #eee !important;
+}
+
+html.night .sidebar-header .home-icon {
+  color: #ccc !important;
+}
+
+html.night .sidebar-toggle {
+  color: white !important;
 }

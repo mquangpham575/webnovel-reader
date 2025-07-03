@@ -13,6 +13,10 @@
      class="continue-button">
     ▶ Đọc tiếp: Chapter {{ last_chapter + 1 }}
   </a>
+
+  <a href="{{ url_for('index') }}" class="back-icon" title="Quay lại">
+    ↩
+  </a>
   {% endif %}
 
   <ul>
@@ -24,7 +28,5 @@
       </li>
     {% endfor %}
   </ul>
-
-  <a class="back-link" href="{{ url_for('index') }}">⬅️ Quay lại danh sách truyện</a>
 </body>
 </html>

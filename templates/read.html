@@ -20,15 +20,17 @@
 </head>
 
 <body>
-  <div class="sidebar">
-    <h2>
-      <a class="home-icon" href="{{ url_for('index') }}">⌂</a>
-      <span>{{ title }}</span>
-    </h2>
+  <div class="sidebar collapsed">
+    <div class="sidebar-header">
+      <h2>
+        <a class="home-icon" href="{{ url_for('index') }}">⌂</a>
+        <span>{{ title }}</span>
+      </h2>
+    </div>
     <div class="chapter-list">
       {% for i in range(chapter_list|length) %}
         <a href="{{ url_for('read_chapter', title=title, chapter_id=i) }}"
-           class="{% if i == chapter_id %}active{% endif %}">
+          class="{% if i == chapter_id %}active{% endif %}">
           {{ chapter_list[i] }}
         </a>
       {% endfor %}
@@ -37,8 +39,23 @@
 
   <div class="reader">
     <div class="night-toggle" onclick="toggleNightMode()">🌙</div>
+    <div class="sidebar-toggle" id="toggle-sidebar" title="Ẩn/Hiện menu">☰</div>
     <div class="settings" onclick="toggleSettings()">⚙️</div>
+    
     <div>{{ chapter | safe }}</div>
+
+    {% if chapter_id > 0 or chapter_id + 1 < chapter_list|length %}
+      <div class="chapter-navigation">
+        {% if chapter_id > 0 %}
+          <a href="{{ url_for('read_chapter', title=title, chapter_id=chapter_id - 1) }}"
+            class="chapter-nav-button">← Previous Chapter</a>
+        {% endif %}
+        {% if chapter_id + 1 < chapter_list|length %}
+          <a href="{{ url_for('read_chapter', title=title, chapter_id=chapter_id + 1) }}"
+            class="chapter-nav-button">Next Chapter →</a>
+        {% endif %}
+      </div>
+    {% endif %}
   </div>
 
   <div id="settings-panel">
@@ -57,86 +74,6 @@
     </div><br><br>
   </div>
 
-  <div class="nav-buttons">
-    {% if chapter_id > 0 %}
-      <a href="{{ url_for('read_chapter', title=title, chapter_id=chapter_id - 1) }}" class="left">&#10094;</a>
-    {% endif %}
-    {% if chapter_id + 1 < chapter_list|length %}
-      <a href="{{ url_for('read_chapter', title=title, chapter_id=chapter_id + 1) }}" class="right">&#10095;</a>
-    {% endif %}
-  </div>
-
-  <script>
-    function toggleSettings() {
-      const panel = document.getElementById("settings-panel");
-      panel.style.display = (panel.style.display === "none") ? "block" : "none";
-    }
-
-    function toggleNightMode() {
-      const isNight = document.documentElement.classList.toggle("night");
-      localStorage.setItem("nightMode", isNight ? "on" : "off");
-      document.querySelector(".night-toggle").textContent = isNight ? "☀️" : "🌙";
-    }
-
-    window.onload = function () {
-      const font = localStorage.getItem("font");
-      const size = localStorage.getItem("fontSize");
-      const night = localStorage.getItem("nightMode");
-
-      if (font) {
-        document.querySelector(".reader").style.fontFamily = font;
-        document.querySelectorAll('.font-button').forEach(button => {
-          if (button.getAttribute('data-font') === font) {
-            button.classList.add('active');
-          }
-        });
-      }
-
-      if (size) {
-        document.querySelectorAll('.reader p').forEach(p => {
-          p.style.fontSize = size;
-        });
-        document.querySelectorAll('.font-size-button').forEach(button => {
-          if (button.getAttribute('data-size') === size) {
-            button.classList.add('active');
-          }
-        });
-      }
-
-      const nightIcon = document.querySelector(".night-toggle");
-      nightIcon.textContent = (night === "on") ? "☀️" : "🌙";
-
-      const sidebar = document.querySelector('.sidebar');
-      const savedScroll = localStorage.getItem("sidebarScroll");
-      if (savedScroll) sidebar.scrollTop = parseInt(savedScroll, 10);
-      window.addEventListener("beforeunload", function () {
-        localStorage.setItem("sidebarScroll", sidebar.scrollTop);
-      });
-
-      const activeChapter = document.querySelector('.chapter-list a.active');
-      if (activeChapter) {
-        const sidebarRect = sidebar.getBoundingClientRect();
-        const activeRect = activeChapter.getBoundingClientRect();
-        if (activeRect.top < sidebarRect.top || activeRect.bottom > sidebarRect.bottom) {
-          sidebar.scrollTop += activeRect.top - sidebarRect.top - 100;
-        }
-      }
-
-      function applySetting(type, attribute, buttonsSelector, readerSelector) {
-        document.querySelectorAll(buttonsSelector).forEach(button => {
-          button.addEventListener('click', () => {
-            const value = button.getAttribute(attribute);
-            document.querySelector(readerSelector).style[type] = value;
-            localStorage.setItem(type, value);
-            document.querySelectorAll(buttonsSelector).forEach(btn => btn.classList.remove('active'));
-            button.classList.add('active');
-          });
-        });
-      }
-
-      applySetting('fontFamily', 'data-font', '.font-button', '.reader');
-      applySetting('fontSize', 'data-size', '.font-size-button', '.reader p');
-    };
-  </script>
+  <script src="{{ url_for('static', filename='js/read.js') }}"></script>
 </body>
 </html>

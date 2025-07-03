@@ -78,3 +78,18 @@ a {
 .continue-button:hover {
   background-color: #2a2a2a;
 }
+
+/* back icon */
+.back-icon {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  font-size: 28px;
+  padding: 8px;
+  z-index: 1001;
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+.back-icon:hover {
+  transform: scale(1.1);
+}
