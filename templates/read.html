@@ -4,14 +4,14 @@
   <meta charset="UTF-8">
   <title>{{ title }}</title>
 
-  <!-- Night Mode khởi động sớm -->
+  <!-- Night Mode startup -->
   <script>
     if (localStorage.getItem("nightMode") === "on") {
       document.documentElement.classList.add("night");
     }
   </script>
 
-  <!-- Google Fonts -->
+  <!-- Google Fonts load -->
   <link href="https://fonts.googleapis.com/css2?family=Lora&family=Roboto&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link href="https://fonts.cdnfonts.com/css/opendyslexic" rel="stylesheet">
@@ -37,7 +37,7 @@
     </div>
   </div>
 
-  <div class="reader">
+  <div class="reader" data-title="{{ title }}" data-chapter-id="{{ chapter_id }}">
     <div class="night-toggle" onclick="toggleNightMode()">🌙</div>
     <div class="sidebar-toggle" id="toggle-sidebar" title="Ẩn/Hiện menu">☰</div>
     <div class="settings" onclick="toggleSettings()">⚙️</div>

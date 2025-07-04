@@ -1,8 +1,6 @@
 import os
 import json
 
-LAST_READ_FILE = os.path.join("data", "last_read.json")
-
 def save_book_to_folder(title, chapters):
     base_path = os.path.join("stories", title)
     os.makedirs(base_path, exist_ok=True)
@@ -33,15 +31,3 @@ def save_book_to_folder(title, chapters):
             f.write(json.dumps(entry, ensure_ascii=False) + "\n")
 
     return index_json
-
-def load_last_read():
-    if os.path.exists(LAST_READ_FILE):
-        with open(LAST_READ_FILE, "r", encoding="utf-8") as f:
-            return json.load(f)
-    return {}
-
-def save_last_read(title, chapter_id):
-    data = load_last_read()
-    data[title] = chapter_id
-    with open(LAST_READ_FILE, "w", encoding="utf-8") as f:
-        json.dump(data, f, ensure_ascii=False, indent=2)

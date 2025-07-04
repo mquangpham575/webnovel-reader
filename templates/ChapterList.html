@@ -8,25 +8,24 @@
 <body>
   <h1>{{ title }}</h1>
 
-  {% if last_chapter is not none %}
-  <a href="{{ url_for('read_chapter', title=title, chapter_id=last_chapter) }}"
-     class="continue-button">
-    ▶ Đọc tiếp: Chapter {{ last_chapter + 1 }}
-  </a>
+  <!-- Chỗ để chèn nút "Đọc tiếp" -->
+  <div id="continue-container"></div>
 
-  <a href="{{ url_for('index') }}" class="back-icon" title="Quay lại">
-    ↩
-  </a>
-  {% endif %}
+  <!-- Nút quay lại -->
+  <a href="{{ url_for('index') }}" class="back-icon" title="Quay lại">↩</a>
 
-  <ul>
+  <!-- Danh sách chương -->
+  <ul class="chapter-list" data-title="{{ title }}">
     {% for chapter in chapters %}
       <li>
-        <a href="{{ url_for('read_chapter', title=title, chapter_id=loop.index0) }}">
+        <a href="{{ url_for('read_chapter', title=title, chapter_id=loop.index0) }}" class="chapter-item">
           {{ chapter['title'] }}
         </a>
       </li>
     {% endfor %}
   </ul>
+
+  <!-- Link đến file JavaScript -->
+  <script src="{{ url_for('static', filename='js/chapterlist.js') }}"></script>
 </body>
 </html>
