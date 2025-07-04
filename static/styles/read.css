@@ -1,11 +1,18 @@
 /* --- Global Styles --- */
-body {
+html, body {
   margin: 0;
-  display: flex;
-  height: 100vh;
+  padding: 0;
+  min-height: 100%;
+  height: auto;
   background: #f5f5f5;
   color: #222;
   transition: background 0.3s, color 0.3s;
+  overflow-x: hidden;
+}
+
+/* --- Main layout --- */
+body {
+  position: relative;
 }
 
 /* --- Title --- */
@@ -15,18 +22,16 @@ h2 {
 
 /* --- Sidebar --- */
 .sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
   width: 280px;
   background: #fff;
   border-right: 1px solid #ccc;
   overflow-y: auto;
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  transform: translateX(0%);
-  opacity: 1;
-  transition: transform 0.3s ease, opacity 0.3s ease;
   z-index: 10;
+  transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
 .sidebar-header {
@@ -86,9 +91,13 @@ h2 {
 
 /* --- Reader Styles --- */
 .reader {
-  flex: 1;
-  overflow-y: auto;
+  margin-left: 280px;
   padding: 50px;
+  min-height: 200vh; /* đảm bảo đủ độ dài cho scroll toàn trang */
+}
+
+.sidebar.collapsed + .reader {
+  margin-left: 0;
 }
 
 .reader h1 {
