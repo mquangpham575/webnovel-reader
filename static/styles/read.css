@@ -145,7 +145,7 @@ html.night .reader::-webkit-scrollbar-thumb {
 .settings {
   position: fixed;
   top: 10px;
-  right: 15px;
+  right: 5px;
   font-size: 22px;
   color: white;
   background: transparent;
@@ -229,8 +229,8 @@ html.night .reader::-webkit-scrollbar-thumb {
 /* --- Night Mode Toggle --- */
 .night-toggle {
   position: fixed;
-  top: 60px;
-  right: 15px; 
+  top: 40px;
+  right: 5px; 
   font-size: 22px;
   color: white;
   background: transparent;
@@ -272,8 +272,8 @@ html.night .reader::-webkit-scrollbar-thumb {
 /* --- Sidebar Toggle --- */
 .sidebar-toggle {
   position: fixed;
-  top: 110px; 
-  right: 20px;
+  top: 70px; 
+  right: 10px;
   font-size: 22px;
   color: #333;
   background: transparent;
@@ -375,6 +375,27 @@ html.night .sidebar a.active {
     margin: 8px 12px;
   }
 
+  .sidebar-toggle,
+  .night-toggle,
+  .settings {
+    font-size: 15px;
+    right: -10px; 
+  }
+  
+  .settings {
+    top: 10px;
+  }
+
+  .night-toggle {
+    top: 30px;
+  }
+
+  .sidebar-toggle {
+    top: 50px;
+    right: -7px; 
+    font-size: 15px;
+  }
+
   .reader {
     padding: 30px 16px;
     margin-left: 0 !important;
@@ -401,7 +422,7 @@ html.night .sidebar a.active {
 
   #settings-panel {
   position: fixed;
-  top: calc(110px + 40px); /* chiều cao nút sidebar-toggle + padding */
+  top: calc(10px ); /* chiều cao nút sidebar-toggle + padding */
   right: 10px;
   width: 260px;
   max-width: calc(100vw - 20px);
@@ -424,4 +445,6 @@ html.night .sidebar a.active {
     padding: 8px 10px;
     font-size: 14px;
   }
+
+  
 }
