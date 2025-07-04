@@ -368,11 +368,12 @@ html.night .sidebar a.active {
   color: #fff !important;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 700px) {
   .chapter-nav-button {
     font-size: 16px;
     padding: 12px 18px;
     margin: 8px 12px;
+    margin-bottom: 60px;
   }
 
   .sidebar-toggle,
