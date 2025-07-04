@@ -37,7 +37,7 @@ h2 {
 .sidebar-header {
   position: sticky;
   top: 0;
-  background-color: #f5f5f5;
+  background-color: #fff;
   padding: 20px 0;
   z-index: 10;
 }
@@ -53,7 +53,6 @@ h2 {
 .sidebar-header .home-icon {
   font-size: 30px;
   text-decoration: none;
-  color: #444;
 }
 
 .sidebar h2 {
@@ -80,13 +79,7 @@ h2 {
 }
 
 .sidebar a:hover {
-  background-color: #eee;
-}
-
-.sidebar a.active {
-  background-color: #333;
-  color: white;
-  font-weight: bold;
+  background-color: #e0e0e0;
 }
 
 /* --- Reader Styles --- */
@@ -295,7 +288,6 @@ html.night .reader::-webkit-scrollbar-thumb {
   transform: scale(1.1);
 }
 
-
 .sidebar.collapsed {
   transform: translateX(-100%);
   opacity: 0;
@@ -309,7 +301,7 @@ html.night {
 }
 
 html.night .sidebar {
-  background: #1e1e1e !important;
+  background-color: #222222 !important;
   color: #eee !important;
 }
 
@@ -321,10 +313,6 @@ html.night .sidebar a:hover {
   background: #333 !important;
 }
 
-html.night .sidebar a.active {
-  color: #000 !important;
-}
-
 html.night .settings {
   color: #000 !important;
 }
@@ -334,7 +322,7 @@ html.night .nav-buttons a {
 }
 
 html.night .reader {
-  background-color: #333 !important;
+  background-color: #222222 !important;
   color: #e0e0e0 !important;
 }
 
@@ -353,7 +341,7 @@ html.night .reader code {
 }
 
 html.night .sidebar-header {
-  background-color: #1e1e1e !important;
+  background-color: #222222 !important;
   color: #eee !important;
 }
 
@@ -363,4 +351,19 @@ html.night .sidebar-header .home-icon {
 
 html.night .sidebar-toggle {
   color: white !important;
+}
+
+html.night, html.night body {
+  background-color: #1e1e1e !important;
+}
+
+/* --- Active Chapter Styles --- */
+.sidebar a.active {
+  background-color: #e0e0e0;
+  color: #000;
+}
+
+html.night .sidebar a.active {
+  background-color: #333 !important;
+  color: #fff !important;
 }
