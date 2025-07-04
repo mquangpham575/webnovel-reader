@@ -51,11 +51,11 @@
       <div class="chapter-navigation">
         {% if chapter_id > 0 %}
           <a href="{{ url_for('read_chapter', title=title, chapter_id=chapter_id - 1) }}"
-            class="chapter-nav-button">← Previous Chapter</a>
+            class="chapter-nav-button">← Previous Chap</a>
         {% endif %}
         {% if chapter_id + 1 < chapter_list|length %}
           <a href="{{ url_for('read_chapter', title=title, chapter_id=chapter_id + 1) }}"
-            class="chapter-nav-button">Next Chapter →</a>
+            class="chapter-nav-button">Next Chap →</a>
         {% endif %}
       </div>
     {% endif %}

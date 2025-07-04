@@ -229,7 +229,7 @@ html.night .reader::-webkit-scrollbar-thumb {
 /* --- Night Mode Toggle --- */
 .night-toggle {
   position: fixed;
-  top: 50px;
+  top: 60px;
   right: 15px; 
   font-size: 22px;
   color: white;
@@ -272,7 +272,7 @@ html.night .reader::-webkit-scrollbar-thumb {
 /* --- Sidebar Toggle --- */
 .sidebar-toggle {
   position: fixed;
-  top: 90px; 
+  top: 110px; 
   right: 20px;
   font-size: 22px;
   color: #333;
@@ -370,40 +370,14 @@ html.night .sidebar a.active {
 
 @media (max-width: 768px) {
   .chapter-nav-button {
-    font-size: 18px;
+    font-size: 16px;
     padding: 12px 18px;
     margin: 8px 12px;
-  }
-
-  .settings,
-  .night-toggle,
-  .sidebar-toggle {
-    font-size: 20px;
-    padding: 8px 10px;
-    top: auto;
-    bottom: 20px;
-    right: 15px;
-  }
-
-  .settings {
-    bottom: 90px;
-  }
-
-  .night-toggle {
-    bottom: 60px;
-  }
-
-  .sidebar-toggle {
-    bottom: 30px;
   }
 
   .reader {
     padding: 30px 16px;
     margin-left: 0 !important;
-  }
-
-  .chapter-content *:not(h2) {
-    font-size: 17px;
   }
 
   .sidebar {
@@ -420,8 +394,34 @@ html.night .sidebar a.active {
     font-size: 20px;
   }
 
-  .sidebar a {
+  .sidebar a {  
     font-size: 16px;
     padding: 10px 12px;
+  }
+
+  #settings-panel {
+  position: fixed;
+  top: calc(110px + 40px); /* chiều cao nút sidebar-toggle + padding */
+  right: 10px;
+  width: 260px;
+  max-width: calc(100vw - 20px);
+  padding: 10px 12px;
+  background: #222;
+  color: white;
+  border-radius: 10px;
+  font-size: 14px;
+  z-index: 1000;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  }
+
+  .font-options, .font-size-options {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .font-button,
+  .font-size-button {
+    padding: 8px 10px;
+    font-size: 14px;
   }
 }
