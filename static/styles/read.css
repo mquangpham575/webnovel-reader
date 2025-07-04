@@ -355,7 +355,3 @@ html.night .sidebar-header .home-icon {
 html.night .sidebar-toggle {
   color: white !important;
 }
-
-.scroll-buffer {
-  height: 50vh;
-}

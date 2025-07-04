@@ -104,7 +104,7 @@ window.onload = function () {
     localStorage.setItem("last_read", JSON.stringify(lastRead));
   }
 
-  // Auto-hide sidebar when clicking reader
+  // Auto-hide sidebar when clicking reader (but not toggle/settings)
   document.querySelector(".reader").addEventListener("click", function (e) {
     if (
       e.target.closest(".sidebar-toggle") ||
@@ -116,37 +116,6 @@ window.onload = function () {
     if (!sidebar.classList.contains("collapsed")) {
       sidebar.classList.add("collapsed");
       localStorage.setItem("sidebarCollapsed", "yes");
-    }
-  });
-
-  // Auto fullscreen on first interaction
-  function requestFullscreenOnce() {
-    if (!document.fullscreenElement) {
-      const docEl = document.documentElement;
-      if (docEl.requestFullscreen) {
-        docEl.requestFullscreen();
-      } else if (docEl.webkitRequestFullscreen) {
-        docEl.webkitRequestFullscreen();
-      } else if (docEl.msRequestFullscreen) {
-        docEl.msRequestFullscreen();
-      }
-    }
-
-    ['click', 'touchstart', 'scroll'].forEach(evt => {
-      window.removeEventListener(evt, requestFullscreenOnce);
-    });
-  }
-
-  ['click', 'touchstart', 'scroll'].forEach(evt => {
-    window.addEventListener(evt, requestFullscreenOnce);
-  });
-
-  // Optional: add class when fullscreen active (for styling)
-  document.addEventListener("fullscreenchange", () => {
-    if (document.fullscreenElement) {
-      document.documentElement.classList.add("fullscreen-active");
-    } else {
-      document.documentElement.classList.remove("fullscreen-active");
     }
   });
 };
