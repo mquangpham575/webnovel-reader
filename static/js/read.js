@@ -25,7 +25,7 @@ if (!localStorage.getItem("sidebarCollapsed")) {
 }
 
 window.onload = function () {
-  // Nightmode by default if not set
+  // Nightmode by default
   if (!localStorage.getItem("nightMode")) {
     localStorage.setItem("nightMode", "on");
   }
@@ -33,23 +33,18 @@ window.onload = function () {
     document.documentElement.classList.add("night");
   }
 
-  // Default font and size if not set
+  // Font & size defaults
   const font = localStorage.getItem("font") || "Georgia";
   const size = localStorage.getItem("fontSize") || "18px";
-
-  // Font family setting
   document.querySelector(".reader").style.fontFamily = font;
+  document.querySelector(".chapter-content").style.setProperty('--reader-font-size', size);
   localStorage.setItem("font", font);
+  localStorage.setItem("fontSize", size);
 
   document.querySelectorAll('.font-button').forEach(button => {
     const btnFont = button.getAttribute('data-font');
     button.classList.toggle('active', btnFont === font);
   });
-
-  // Font size setting
-  document.querySelector(".chapter-content").style.setProperty('--reader-font-size', size);
-  localStorage.setItem("fontSize", size);
-
   document.querySelectorAll('.font-size-button').forEach(button => {
     const btnSize = button.getAttribute('data-size');
     button.classList.toggle('active', btnSize === size);
@@ -59,15 +54,16 @@ window.onload = function () {
   const nightIcon = document.querySelector(".night-toggle");
   nightIcon.textContent = (localStorage.getItem("nightMode") === "on") ? "☀️" : "🌙";
 
-  // Save sidebar scroll position
+  // Scroll sidebar to active chapter
   const sidebar = document.querySelector('.sidebar');
+  if (localStorage.getItem("sidebarCollapsed") === "yes") {
+    sidebar.classList.add("collapsed");
+  }
   const savedScroll = localStorage.getItem("sidebarScroll");
   if (savedScroll) sidebar.scrollTop = parseInt(savedScroll, 10);
-  window.addEventListener("beforeunload", function () {
+  window.addEventListener("beforeunload", () => {
     localStorage.setItem("sidebarScroll", sidebar.scrollTop);
   });
-
-  // Scroll sidebar to active chapter
   const activeChapter = document.querySelector('.chapter-list a.active');
   if (activeChapter) {
     const sidebarRect = sidebar.getBoundingClientRect();
@@ -77,12 +73,7 @@ window.onload = function () {
     }
   }
 
-  // Save sidebar state
-  if (localStorage.getItem("sidebarCollapsed") === "yes") {
-    sidebar.classList.add("collapsed");
-  }
-
-  // Choose font family by button click
+  // Font switch
   document.querySelectorAll('.font-button').forEach(button => {
     button.addEventListener('click', () => {
       const font = button.getAttribute('data-font');
@@ -93,7 +84,7 @@ window.onload = function () {
     });
   });
 
-  // Choose font size by button click
+  // Font size switch
   document.querySelectorAll('.font-size-button').forEach(button => {
     button.addEventListener('click', () => {
       const size = button.getAttribute('data-size');
@@ -107,36 +98,34 @@ window.onload = function () {
   // Save last read chapter
   const readerTitle = document.querySelector(".reader")?.getAttribute("data-title");
   const chapterId = document.querySelector(".reader")?.getAttribute("data-chapter-id");
-
   if (readerTitle && chapterId !== null) {
     const lastRead = JSON.parse(localStorage.getItem("last_read") || "{}");
     lastRead[readerTitle] = parseInt(chapterId, 10);
     localStorage.setItem("last_read", JSON.stringify(lastRead));
   }
 
+  // Auto-hide sidebar when clicking reader (but not toggle/settings)
   document.querySelector(".reader").addEventListener("click", function (e) {
-    // Nếu click vào nút toggle hoặc nút settings thì KHÔNG đóng sidebar
     if (
-      e.target.closest(".sidebar-toggle") || 
-      e.target.closest(".settings") || 
+      e.target.closest(".sidebar-toggle") ||
+      e.target.closest(".settings") ||
       e.target.closest("#settings-panel")
     ) return;
-      setTimeout(() => {
-    if (window.innerWidth <= 768) {
-      window.scrollTo(0, 1);
-    }
-  }, 100);
 
     const sidebar = document.querySelector(".sidebar");
     if (!sidebar.classList.contains("collapsed")) {
       sidebar.classList.add("collapsed");
       localStorage.setItem("sidebarCollapsed", "yes");
     }
-  })
-  setTimeout(() => {
+
+    // Scroll 1px to hint browser to hide address bar
     if (window.innerWidth <= 768) {
       window.scrollTo(0, 1);
     }
-  }, 100);
-};
+  });
 
+  // Initial scroll to hide address bar on mobile
+  if (window.innerWidth <= 768 && window.scrollY === 0) {
+    setTimeout(() => window.scrollTo(0, 1), 100);
+  }
+};
