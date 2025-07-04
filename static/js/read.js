@@ -118,4 +118,19 @@ window.onload = function () {
       localStorage.setItem("sidebarCollapsed", "yes");
     }
   });
+
+  // Auto-hide sidebar on scroll down
+  let lastScrollTop = 0;
+  window.addEventListener("scroll", function () {
+    const sidebar = document.querySelector(".sidebar");
+    const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+
+    if (currentScroll > lastScrollTop && !sidebar.classList.contains("collapsed")) {
+      sidebar.classList.add("collapsed");
+      localStorage.setItem("sidebarCollapsed", "yes");
+    }
+
+    lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; // đảm bảo không scroll âm
+  }, { passive: true });
+
 };
